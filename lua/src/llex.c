@@ -450,6 +450,7 @@ static int llex (LexState *ls, SemInfo *seminfo) {
 }
 
 
+//= the interface to lpaser.c
 void luaX_next (LexState *ls) {
   ls->lastline = ls->linenumber;
   if (ls->lookahead.token != TK_EOS) {  /* is there a look-ahead token? */

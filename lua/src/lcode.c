@@ -56,6 +56,7 @@ void luaK_nil (FuncState *fs, int from, int n) {
 }
 
 
+//= returns an encoded jump instruction(an int value)
 int luaK_jump (FuncState *fs) {
   int jpc = fs->jpc;  /* save list of jumps to here */
   int j;
@@ -182,6 +183,7 @@ void luaK_patchtohere (FuncState *fs, int list) {
 }
 
 
+//= `list` equals `pc`, the offset of instruction.
 void luaK_concat (FuncState *fs, int *l1, int l2) {
   if (l2 == NO_JUMP) return;
   else if (*l1 == NO_JUMP)
@@ -536,6 +538,7 @@ static int jumponcond (FuncState *fs, expdesc *e, int cond) {
 }
 
 
+//= go ahead if true, else jump.
 void luaK_goiftrue (FuncState *fs, expdesc *e) {
   int pc;  /* pc of last jump */
   luaK_dischargevars(fs, e);

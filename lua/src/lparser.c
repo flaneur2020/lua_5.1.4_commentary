@@ -77,6 +77,7 @@ static void errorlimit (FuncState *fs, int limit, const char *what) {
 }
 
 
+//= test and luaX_next
 static int testnext (LexState *ls, int c) {
   if (ls->t.token == c) {
     luaX_next(ls);
@@ -868,6 +869,7 @@ static void expr (LexState *ls, expdesc *v) {
 */
 
 
+//= closing one block, as a `}` in C: end/ else/ until/ EOS
 static int block_follow (int token) {
   switch (token) {
     case TK_ELSE: case TK_ELSEIF: case TK_END:
@@ -1268,6 +1270,7 @@ static void retstat (LexState *ls) {
 }
 
 
+//= returns 1 on TK_RETURN and TK_BREAK
 static int statement (LexState *ls) {
   int line = ls->linenumber;  /* may be needed for error messages */
   switch (ls->t.token) {
@@ -1322,6 +1325,9 @@ static int statement (LexState *ls) {
 }
 
 
+//= if the next token is TK_RETURN or TK_BREAK, `islast` is set.
+//= `block_follow(ls->t.token)` checks if the next token is enclosing
+//= the current block(just as a `}` in C).
 static void chunk (LexState *ls) {
   /* chunk -> { stat [`;'] } */
   int islast = 0;
