@@ -98,6 +98,7 @@ int luaK_getlabel (FuncState *fs) {
 }
 
 
+//= get the offset from one JUMP instruction.
 static int getjump (FuncState *fs, int pc) {
   int offset = GETARG_sBx(fs->f->code[pc]);
   if (offset == NO_JUMP)  /* point to itself represents end of list */
@@ -183,7 +184,9 @@ void luaK_patchtohere (FuncState *fs, int list) {
 }
 
 
-//= `list` equals `pc`, the offset of instruction.
+//= the backpatching list in lua: as a linked list, in each node 
+//= referencing the next node in its address field.
+//= the value of `list` equals `pc`, the offset of instruction.
 void luaK_concat (FuncState *fs, int *l1, int l2) {
   if (l2 == NO_JUMP) return;
   else if (*l1 == NO_JUMP)

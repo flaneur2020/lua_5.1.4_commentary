@@ -158,6 +158,7 @@ static int registerlocalvar (LexState *ls, TString *varname) {
   new_localvar(ls, luaX_newstring(ls, "" v, (sizeof(v)/sizeof(char))-1), n)
 
 
+//= allocate a new register
 static void new_localvar (LexState *ls, TString *name, int n) {
   FuncState *fs = ls->fs;
   luaY_checklimit(fs, fs->nactvar+n+1, LUAI_MAXVARS, "local variables");
@@ -974,6 +975,8 @@ static int cond (LexState *ls) {
 }
 
 
+//= on break statement, it must located inside one block, and the
+//= jump targets are all the same(as &bl->breaklist)
 static void breakstat (LexState *ls) {
   FuncState *fs = ls->fs;
   BlockCnt *bl = fs->bl;
@@ -1178,6 +1181,7 @@ static void localfunc (LexState *ls) {
 }
 
 
+//= reference or assign a local variable.
 static void localstat (LexState *ls) {
   /* stat -> LOCAL NAME {`,' NAME} [`=' explist1] */
   int nvars = 0;
